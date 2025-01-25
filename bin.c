@@ -206,3 +206,81 @@ int singin(user *plist, int *pnum)
     }
     printf(RED "Your username and password do not match. Please try again.\n" RESET);
 }
+
+void Change_Username(user *plist, int *pnum, int i)
+{
+    char buf[100];
+    int i, flag;
+    while (1)
+    {
+        printf("Enter Username: ");
+        fgets(buf, sizeof(buf), stdin);
+        buf[strcspn(buf, "\n")] = '\0'; // Remove newline
+        flag = 0;
+        for (int j = 0; j < i; ++j)
+        {
+            if (strcmp((plist + j)->username, buf) == 0)
+            {
+                ++flag;
+                break;
+            }
+        }
+        for (int j = i; j < *pnum; ++j)
+        {
+            if (strcmp((plist + j)->username, buf) == 0)
+            {
+                ++flag;
+                break;
+            }
+        }
+        if (flag)
+        {
+            printf("Please enter uniqe usename\n");
+        }
+        else
+        {
+            strcpy((plist + i)->username, buf);
+            return;
+        }
+    }
+}
+
+void Foget_Pass(user *plist, int *pnum)
+{
+    char user[100], email[100], temp[100];
+    int i, flag = 0;
+    char ch;
+    while (1)
+    {
+        flag = -1;
+        printf("Enter Username: ");
+        fgets(user, sizeof(user), stdin);
+        user[strcspn(user, "\n")] = '\0'; // Remove newline
+        printf("Enter Email: ");
+        fgets(email, sizeof(email), stdin);
+        email[strcspn(email, "\n")] = '\0'; // Remove newline
+
+        for (i = 0; i < *pnum; ++i)
+        {
+            if (strcmp(user, (plist + i)->username) == 0)
+            {
+                if (strcmp(email, (plist + i)->email) == 0)
+                {
+                    flag = i;
+                    // printf(GREEN "LOG IN sucessfully" RESET);
+                }
+            }
+        }
+        printf(RED "Your username and email do not match. Please try again.\n" RESET);
+    }
+
+    while (1)
+    {
+        if (getPassword(temp, sizeof(temp)))
+        {
+            (plist+flag)->pass = hash(temp); // Store hashed password
+            return;
+        }
+        printf(RED "Please try again!\n" RESET);
+    }
+}
