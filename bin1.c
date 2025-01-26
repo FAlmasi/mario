@@ -56,10 +56,10 @@ void map1() {
 
     // Coordinates of the emojis '7' (🎑)
     int emoji1_i = 4;  // Row 4
-    int emoji1_j = 42; // Column 42
+    int emoji1_j = 44; // Column 42
 
     int emoji2_i = 9;  // Row 9
-    int emoji2_j = 28; // Column 28
+    int emoji2_j = 35; // Column 28
 
     // Print the initial board
     printBoard(board);
@@ -71,7 +71,7 @@ void map1() {
         toggleEmoji(board, emoji2_i, emoji2_j, ' ');
 
         // Print the updated board
-        COORD origin = {0, 0}; // Reset cursor to top-left corner
+        COORD origin = {0, 1}; // Reset cursor to top-left corner
         SetConsoleCursorPosition(hStdout, origin);  
         printBoard(board);
 
@@ -89,14 +89,6 @@ void map1() {
         // Wait for 2 seconds
         Sleep(2000); // 2000 milliseconds = 2 seconds
 
-        // Check if the game is paused (e.g., press 'P' to pause)
-        if (_kbhit()) { // Check if a key is pressed
-            char ch = _getch(); // Read the pressed key
-            if (ch == 'p' || ch == 'P') { // Pause if 'P' is pressed
-                printf("Game paused. Press any key to continue...\n");
-                _getch(); // Wait for any key to continue
-            }
-        }
     }  
 }
 
